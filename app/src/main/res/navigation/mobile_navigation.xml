@@ -15,11 +15,34 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.bigboyz_final_project.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_createQuizFragment"
+            app:destination="@id/createQuizFragment" />
+
+        <action
+            android:id="@+id/action_navigation_dashboard_to_beginQuiz"
+            app:destination="@id/beginQuiz" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.bigboyz_final_project.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/createQuizFragment"
+        android:name="com.example.bigboyz_final_project.CreateQuizFragment"
+        android:label="Create Quiz"
+        tools:layout="@layout/fragment_createquize" />
+
+    <fragment
+        android:id="@+id/beginQuiz"
+        android:name="com.example.bigboyz_final_project.beginQuiz"
+        android:label="Quiz"
+        tools:layout="@layout/fragment_begin_quiz" />
+
+
 </navigation>

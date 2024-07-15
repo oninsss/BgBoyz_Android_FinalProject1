@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import com.example.bigboyz_final_project.Account
 import com.example.bigboyz_final_project.Answer
 import com.example.bigboyz_final_project.Question
+import com.example.bigboyz_final_project.QuestionCard
 import com.example.bigboyz_final_project.Record
 
 class DbManagement {
@@ -22,15 +23,23 @@ class DbManagement {
         fun insertQuiz(db: SQLiteDatabase, quiz: Record) {
             val values = ContentValues().apply {
                 put(DatabaseHelper.COLUMN_ACCOUNT_REFERENCE, quiz.createdBy)
-                put(DatabaseHelper.COLUMN_ITEMS, quiz.questions.toString())
+                put(DatabaseHelper.COLUMN_TITLE, quiz.title)
+                put(DatabaseHelper.COLUMN_DESCRIPTION, quiz.description)
             }
-            db.insert(DatabaseHelper.TABLE_NAME_QUIZZES, null, values)
+            val quizId = db.insert(DatabaseHelper.TABLE_NAME_QUIZZES, null, values)
+            val title = db.insert(DatabaseHelper.TABLE_NAME_QUIZZES, null, values)
+            val description = db.insert(DatabaseHelper.TABLE_NAME_QUIZZES, null, values)
+
         }
 
-        fun insertQuestion(db: SQLiteDatabase, question: Question) {
+        fun insertQuestion(db: SQLiteDatabase, question: QuestionCard, quizId: Long) {
             val values = ContentValues().apply {
-                put(DatabaseHelper.COLUMN_QUIZ_ID_REFERENCE, question.quizId)
-                put(DatabaseHelper.COLUMN_QUESTION_TEXT, question.questionText)
+                put(DatabaseHelper.COLUMN_QUIZ_ID_REFERENCE, quizId)
+                put(DatabaseHelper.COLUMN_NAME_QUESTION, question.question)
+                put(DatabaseHelper.COLUMN_NAME_WRONGANSWER1, question.wrongAnswer1)
+                put(DatabaseHelper.COLUMN_NAME_WRONGANSWER2, question.wrongAnswer2)
+                put(DatabaseHelper.COLUMN_NAME_WRONGANSWER3, question.wrongAnswer3)
+                put(DatabaseHelper.COLUMN_NAME_CORRECTANSWER, question.correctAnswer)
             }
             db.insert(DatabaseHelper.TABLE_NAME_QUESTIONS, null, values)
         }

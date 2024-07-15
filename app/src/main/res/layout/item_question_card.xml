@@ -1,0 +1,73 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="20dp"
+    android:elevation="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/questionNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question #"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Question" />
+
+        <EditText
+            android:id="@+id/wrong_answer_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wrong answer 1" />
+
+        <EditText
+            android:id="@+id/wrong_answer_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wrong answer 2" />
+
+        <EditText
+            android:id="@+id/wrong_answer_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wrong answer 3" />
+
+        <EditText
+            android:id="@+id/correct_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correct answer" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="24dp"
+            android:elevation="20dp">
+            <Button
+                android:id="@+id/removeQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remove Question"
+                android:backgroundTint="#ff3945"/>
+        </androidx.cardview.widget.CardView>
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
