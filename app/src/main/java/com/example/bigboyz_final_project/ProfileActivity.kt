@@ -83,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
         // Populate the fields with existing data
         val username = dbHelper.getUsernameByAccountId(accountId!!)
         val email = dbHelper.getEmailByAccountId(accountId!!)
-        val password = dbHelper.getPasswordByAccountId(accountId!!)  // Assuming you have a method to get the password
+        val password = dbHelper.getPasswordByAccountId(accountId!!)
 
         usernameEditText.setText(username)
         emailEditText.setText(email)
