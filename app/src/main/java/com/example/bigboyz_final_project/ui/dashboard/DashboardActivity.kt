@@ -4,9 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.bigboyz_final_project.ProfileActivity
 import com.example.bigboyz_final_project.R
-import com.example.bigboyz_final_project.UserStatsFragment
+import com.example.bigboyz_final_project.WebviewActivity
 import com.example.bigboyz_final_project.database_stuff.DatabaseHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -31,11 +32,10 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        // Load the UserStatsFragment
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, UserStatsFragment())
-                .commit()
+        val btn_to_webview = findViewById<CardView>(R.id.btn_to_webview)
+        btn_to_webview.setOnClickListener {
+            val intent = Intent(this, WebviewActivity::class.java)
+            startActivity(intent)
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -43,7 +43,7 @@ class DashboardActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_dashboard -> true
                 R.id.nav_quizzes -> {
-                    // Navigate to QuizzesActivity
+                    // Navigate to QuizzesActivity or handle as needed
                     true
                 }
                 R.id.nav_profile -> {

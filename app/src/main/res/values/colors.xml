@@ -13,6 +13,9 @@
     <color name="yellow_200">#FFD946</color>
     <color name="yellow_500">#FFC107</color>
 
+    <color name="orange_200">#DBD7D1</color>
+    <color name="orange_500">#F77431</color>
+
     <color name="black">#0E0E0E</color>
     <color name="white">#FEFEFE</color>
     <color name="gray">#E9E7F1</color>

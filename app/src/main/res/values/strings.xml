@@ -26,10 +26,15 @@
 
     <!-- Dashboard -->
     <string name="dashboard_greetings">Ready to test your whiz?</string>
+    <string name="dashboard_to_playlist_1">Having a hard time?</string>
+    <string name="dashboard_to_playlist_2">TAP HERE</string>
     <string name="dashboard_create_take_quiz">Create/Take a Quiz</string>
     <string name="title_schedule">Your Scheduled Quizzes</string>
     <string name="btn_create_quiz">CREATE QUIZ</string>
     <string name="btn_take_quiz">TAKE QUIZ</string>
+
+    <!-- Webview -->
+    <string name="webview">Playlist</string>
 
     <!-- Profile -->
     <string name="profile_header">Profile</string>
