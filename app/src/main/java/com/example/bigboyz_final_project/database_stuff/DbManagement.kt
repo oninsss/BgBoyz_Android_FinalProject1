@@ -9,19 +9,19 @@ import com.example.bigboyz_final_project.Record
 
 class DbManagement {
     companion object {
-        fun insertAccount(db: SQLiteDatabase, account: Account) {
+        fun insertAccount(db: SQLiteDatabase, account: Account): Boolean {
             val values = ContentValues().apply {
-                put(DatabaseHelper.COLUMN_ACCOUNT_ID, account.accountId)
                 put(DatabaseHelper.COLUMN_USERNAME, account.username)
                 put(DatabaseHelper.COLUMN_EMAIL, account.email)
                 put(DatabaseHelper.COLUMN_PASSWORD, account.password)
             }
-            db.insert(DatabaseHelper.TABLE_NAME_ACCOUNTS, null, values)
+            val result = db.insert(DatabaseHelper.TABLE_NAME_ACCOUNTS, null, values)
+            return result != -1L
         }
 
-        fun insertQuiz(db: SQLiteDatabase, quiz: Record) {
+        fun insertQuiz(db: SQLiteDatabase, quiz: Record, accountId: String) {
             val values = ContentValues().apply {
-                put(DatabaseHelper.COLUMN_ACCOUNT_REFERENCE, quiz.createdBy)
+                put(DatabaseHelper.COLUMN_ACCOUNT_REFERENCE, accountId)
                 put(DatabaseHelper.COLUMN_ITEMS, quiz.questions.toString())
             }
             db.insert(DatabaseHelper.TABLE_NAME_QUIZZES, null, values)

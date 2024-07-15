@@ -1,6 +1,8 @@
 package com.example.bigboyz_final_project.database_stuff
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.bigboyz_final_project.Account
@@ -42,7 +44,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQueryAccounts = "CREATE TABLE $TABLE_NAME_ACCOUNTS (" +
-                "$COLUMN_ACCOUNT_ID TEXT PRIMARY KEY, " +
+                "$COLUMN_ACCOUNT_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_USERNAME TEXT, " +
                 "$COLUMN_EMAIL TEXT, " +
                 "$COLUMN_PASSWORD TEXT)"
@@ -78,15 +80,101 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     // Insert functions
-    fun insertAccount(account: Account) {
+    fun insertAccount(account: Account): Boolean {
         val db = writableDatabase
-        DbManagement.insertAccount(db, account)
+        val result = DbManagement.insertAccount(db, account)
         db.close()
+        return result
     }
 
-    fun insertQuiz(quiz: Record) {
+    fun authenticateUser(email: String, password: String): String? {
+        val db = readableDatabase
+        var cursor: Cursor? = null
+        val query = "SELECT $COLUMN_ACCOUNT_ID FROM $TABLE_NAME_ACCOUNTS WHERE $COLUMN_EMAIL = ? AND $COLUMN_PASSWORD = ?"
+
+        return try {
+            cursor = db.rawQuery(query, arrayOf(email, password))
+
+            if (cursor.moveToFirst()) {
+                val accountId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ACCOUNT_ID))
+                accountId
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            cursor?.close()
+            db.close()
+        }
+    }
+
+    fun getUsernameByAccountId(accountId: String): String? {
+        val db = readableDatabase
+        val cursor: Cursor = db.rawQuery(
+            "SELECT $COLUMN_USERNAME FROM $TABLE_NAME_ACCOUNTS WHERE $COLUMN_ACCOUNT_ID = ?",
+            arrayOf(accountId)
+        )
+        return if (cursor.moveToFirst()) {
+            val username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME))
+            cursor.close()
+            username
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
+    fun getEmailByAccountId(accountId: String): String? {
+        val db = readableDatabase
+        val cursor: Cursor = db.rawQuery(
+            "SELECT $COLUMN_EMAIL FROM $TABLE_NAME_ACCOUNTS WHERE $COLUMN_ACCOUNT_ID = ?",
+            arrayOf(accountId)
+        )
+        return if (cursor.moveToFirst()) {
+            val email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL))
+            cursor.close()
+            email
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
+    fun getPasswordByAccountId(accountId: String): String? {
+        val db = readableDatabase
+        val cursor: Cursor = db.rawQuery(
+            "SELECT $COLUMN_PASSWORD FROM $TABLE_NAME_ACCOUNTS WHERE $COLUMN_ACCOUNT_ID = ?",
+            arrayOf(accountId)
+        )
+        return if (cursor.moveToFirst()) {
+            val password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
+            cursor.close()
+            password
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
+    fun updateUserProfile(accountId: String, username: String, email: String, password: String): Boolean {
         val db = writableDatabase
-        DbManagement.insertQuiz(db, quiz)
+        val values = ContentValues().apply {
+            put(COLUMN_USERNAME, username)
+            put(COLUMN_EMAIL, email)
+            put(COLUMN_PASSWORD, password)
+        }
+        val rowsAffected = db.update(TABLE_NAME_ACCOUNTS, values, "$COLUMN_ACCOUNT_ID = ?", arrayOf(accountId))
+        db.close()
+        return rowsAffected > 0
+    }
+
+
+    // Other insert functions
+    fun insertQuiz(quiz: Record, accountId: String) {
+        val db = writableDatabase
+        DbManagement.insertQuiz(db, quiz, accountId)
         db.close()
     }
 

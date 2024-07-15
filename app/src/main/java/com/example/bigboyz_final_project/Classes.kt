@@ -1,7 +1,6 @@
 package com.example.bigboyz_final_project
 
 data class Account(
-    var accountId: String,
     var username: String,
     var email: String,
     var password: String

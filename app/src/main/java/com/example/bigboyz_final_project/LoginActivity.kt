@@ -6,10 +6,18 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.bigboyz_final_project.database_stuff.DatabaseHelper
+import com.example.bigboyz_final_project.ui.dashboard.DashboardActivity
+
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        dbHelper = DatabaseHelper(this)
 
         val editTextEmail = findViewById<EditText>(R.id.input_email)
         val editTextPassword = findViewById<EditText>(R.id.input_password)
@@ -25,11 +33,29 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val accountId = dbHelper.authenticateUser(email, password)
+
+            if (accountId != null) {
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, DashboardActivity::class.java).apply {
+                    putExtra("ACCOUNT_ID", accountId)
+                }
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+            }
         }
 
         buttonToSignup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dbHelper.close()
     }
 }

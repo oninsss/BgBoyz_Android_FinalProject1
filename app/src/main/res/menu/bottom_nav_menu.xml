@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/dashboard"
+        android:id="@+id/nav_dashboard"
         android:enabled="true"
         android:icon="@drawable/home_filled_24"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/quizzes"
+        android:id="@+id/nav_quizzes"
         android:enabled="true"
         android:icon="@drawable/quiz_filled_24"
         android:title="@string/title_quizzes" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/nav_profile"
         android:enabled="true"
         android:icon="@drawable/profile_filled_24"
         android:title="@string/title_profile" />

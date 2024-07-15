@@ -6,11 +6,17 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.bigboyz_final_project.database_stuff.DatabaseHelper
 
 class SignupActivity : AppCompatActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+        dbHelper = DatabaseHelper(this)
 
         val editTextUsername = findViewById<EditText>(R.id.input_username)
         val editTextEmail = findViewById<EditText>(R.id.input_email)
@@ -38,6 +44,16 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val account = Account(username, email, password)
+            val isInserted = dbHelper.insertAccount(account)
+            if (isInserted) {
+                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
         buttonToLogin.setOnClickListener {

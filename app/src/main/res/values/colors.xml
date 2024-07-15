@@ -3,8 +3,15 @@
     <color name="purple_200">#DACFF5</color>
     <color name="purple_500">#7E7EF0</color>
     <color name="purple_700">#6445F5</color>
+
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <color name="green_200">#03BE5A</color>
+    <color name="green_500">#308D49</color>
+
+    <color name="yellow_200">#FFD946</color>
+    <color name="yellow_500">#FFC107</color>
 
     <color name="black">#0E0E0E</color>
     <color name="white">#FEFEFE</color>
