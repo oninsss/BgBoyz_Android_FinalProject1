@@ -7,15 +7,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.bigboyz_final_project.database_stuff.DatabaseHelper
+import com.google.firebase.auth.FirebaseAuth
 
 class SignupActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        auth = FirebaseAuth.getInstance()
         dbHelper = DatabaseHelper(this)
 
         val editTextUsername = findViewById<EditText>(R.id.input_username)
@@ -26,10 +29,10 @@ class SignupActivity : AppCompatActivity() {
         val buttonToLogin = findViewById<Button>(R.id.btn_to_login)
 
         buttonSignup.setOnClickListener {
-            val username = editTextUsername.text.toString()
-            val email = editTextEmail.text.toString()
-            val password = editTextPassword.text.toString()
-            val confirmPassword = editTextConfirmPassword.text.toString()
+            val username = editTextUsername.text.toString().trim()
+            val email = editTextEmail.text.toString().trim()
+            val password = editTextPassword.text.toString().trim()
+            val confirmPassword = editTextConfirmPassword.text.toString().trim()
 
             if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
@@ -44,16 +47,31 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val account = Account(username, email, password)
-            val isInserted = dbHelper.insertAccount(account)
-            if (isInserted) {
-                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
-            }
+            // Create user with email and password using Firebase Authentication
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val firebaseUser = auth.currentUser
+                        val userId = firebaseUser?.uid ?: ""
+
+                        // Save additional user data to your local database using DatabaseHelper
+                        val account = Account(username, email, password)
+                        val isInserted = dbHelper.insertAccount(account)
+
+                        if (isInserted) {
+                            Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Failed to save user data", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
 
         buttonToLogin.setOnClickListener {
