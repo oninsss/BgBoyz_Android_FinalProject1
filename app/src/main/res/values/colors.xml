@@ -14,7 +14,9 @@
     <color name="yellow_500">#FFC107</color>
 
     <color name="orange_200">#DBD7D1</color>
-    <color name="orange_500">#F77431</color>
+    <color name="orange_500">#ffb703</color>
+
+    <color name="pink_200">#FEBDD2</color>
 
     <color name="black">#0E0E0E</color>
     <color name="white">#FEFEFE</color>

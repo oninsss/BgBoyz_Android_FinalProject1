@@ -2,6 +2,10 @@
     <string name="app_name">BigBrainz</string>
     <string name="btn_cancel">CANCEL</string>
 
+    <!-- Welcome Page -->
+    <string name="welcome_header">BigBrainz</string>
+    <string name="welcome_subheader">Elevate your Whiz with every Quiz</string>
+
     <!-- Bottom Navigation Menu -->
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -28,6 +32,8 @@
     <string name="dashboard_greetings">Ready to test your whiz?</string>
     <string name="dashboard_to_playlist_1">Having a hard time?</string>
     <string name="dashboard_to_playlist_2">TAP HERE</string>
+    <string name="dashboard_to_playlist_3">Studying? How bout some</string>
+    <string name="dashboard_to_playlist_4">MUSIC</string>
     <string name="dashboard_create_take_quiz">Create/Take a Quiz</string>
     <string name="title_schedule">Your Scheduled Quizzes</string>
     <string name="btn_create_quiz">CREATE QUIZ</string>
